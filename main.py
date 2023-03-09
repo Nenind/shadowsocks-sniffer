@@ -46,8 +46,7 @@ def add_score(c, x):
 	if score[c] >= thres:
 		logging.debug("detected:", c)
 		blocked[c] = True
-	print(type(c))
-	logging.debug('[', datetime.now(), ']', c, score[c])
+	logging.debug('[', datetime.now(), ']', c[0], score[c])
 
 def add(c, x):
 	add_score((c[0], c[2]), x)
