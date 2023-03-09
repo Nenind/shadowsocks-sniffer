@@ -35,7 +35,7 @@ thres = 16
 sample = 128
 limit = sample * 128
 mtu = 1600
-logging.debug(datetime.now())
+logging.debug("Startup: {}".format(datetime.now() + timedelta(hours=5)).strftime("%c"))
 def add_score(c, x):
 	if c in blocked:
 		return
@@ -46,7 +46,9 @@ def add_score(c, x):
 	if score[c] >= thres:
 		logging.debug("detected:", c)
 		blocked[c] = True
-	logging.debug('[', datetime.now(), ']', c[0], score[c])
+	# if (c[1] == 443):
+	foundScore = ('{} IP: {}:{}, score: {}'.format((datetime.now() + timedelta(hours=5)).strftime("%c"), c[0], c[1], score[c]))
+	logging.debug(foundScore)
 
 def add(c, x):
 	add_score((c[0], c[2]), x)
