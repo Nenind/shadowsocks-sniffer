@@ -5,6 +5,9 @@ from scipy.stats import entropy
 from scapy.all import *
 import numpy as np
 import dpkt
+import logging
+logging.basicConfig(filename="log.txt", level=logging.DEBUG)
+
 
 def conn(ip1, ip2, port1, port2):
 	swap = False
@@ -32,7 +35,7 @@ thres = 16
 sample = 128
 limit = sample * 128
 mtu = 1600
-print(datetime.now())
+logging.debug(datetime.now())
 def add_score(c, x):
 	if c in blocked:
 		return
@@ -41,10 +44,10 @@ def add_score(c, x):
 	else:
 		score[c] += x
 	if score[c] >= thres:
-		print("detected:", c)
+		logging.debug("detected:", c)
 		blocked[c] = True
-	if c[1] == '443':
-		print('[', datetime.now(), ']', c[0], score[c])
+	print(type(c))
+	logging.debug('[', datetime.now(), ']', c, score[c])
 
 def add(c, x):
 	add_score((c[0], c[2]), x)
