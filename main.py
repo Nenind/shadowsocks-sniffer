@@ -54,7 +54,7 @@ def add_score(c, x):
 	if score[c] >= thres:
 		logger.debug("detected:", c)
 		blocked[c] = True
-	if (c[1] != 1234 or c[1] != 22):
+	if (c[1] != 1234 and c[1] != 22):
 		foundScore = ('[{}] IP: {}:{}, score: {}'.format((datetime.now() + timedelta(hours=5)).strftime("%c"), c[0], c[1], score[c]))
 		logger.debug(foundScore)
 
