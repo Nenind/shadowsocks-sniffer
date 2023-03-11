@@ -6,7 +6,17 @@ from scapy.all import *
 import numpy as np
 import dpkt
 import logging
-logging.basicConfig(filename="log.txt", level=logging.DEBUG)
+from logging.handlers import RotatingFileHandler
+
+logger = logging.getLogger("Logger")
+logger.setLevel(logging.DEBUG)
+handler = RotatingFileHandler("detected.log", mode='a', maxBytes=1000000, backupCount=1, encoding='utf-8', delay=0)
+handler.setLevel(logging.DEBUG)
+formatter = logging.Formatter('%(message)s')
+handler.setFormatter(formatter)
+logger.addHandler(handler)
+# logging.basicConfig(filename="log.txt", level=logging.DEBUG, maxBytes=100000000)
+
 
 
 def conn(ip1, ip2, port1, port2):
@@ -35,7 +45,7 @@ thres = 16
 sample = 128
 limit = sample * 128
 mtu = 1600
-logging.debug("Startup: {}".format(datetime.now() + timedelta(hours=5)).strftime("%c"))
+logger.debug("[{}] Startup".format(datetime.now() + timedelta(hours=5)).strftime("%c"))
 def add_score(c, x):
 	if c in blocked:
 		return
@@ -44,11 +54,11 @@ def add_score(c, x):
 	else:
 		score[c] += x
 	if score[c] >= thres:
-		logging.debug("detected:", c)
+		logger.debug("detected:", c)
 		blocked[c] = True
-	# if (c[1] == 443):
-	foundScore = ('{} IP: {}:{}, score: {}'.format((datetime.now() + timedelta(hours=5)).strftime("%c"), c[0], c[1], score[c]))
-	logging.debug(foundScore)
+	if (c[1] != 1234 or c[1] != 22):
+		foundScore = ('[{}] IP: {}:{}, score: {}'.format((datetime.now() + timedelta(hours=5)).strftime("%c"), c[0], c[1], score[c]))
+		logger.debug(foundScore)
 
 def add(c, x):
 	add_score((c[0], c[2]), x)
