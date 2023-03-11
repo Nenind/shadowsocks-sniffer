@@ -15,8 +15,6 @@ handler.setLevel(logging.DEBUG)
 formatter = logging.Formatter('%(message)s')
 handler.setFormatter(formatter)
 logger.addHandler(handler)
-# logging.basicConfig(filename="log.txt", level=logging.DEBUG, maxBytes=100000000)
-
 
 
 def conn(ip1, ip2, port1, port2):
@@ -45,7 +43,7 @@ thres = 16
 sample = 128
 limit = sample * 128
 mtu = 1600
-logger.debug("[{}] Startup".format(datetime.now() + timedelta(hours=5)).strftime("%c"))
+logger.debug("[{}] Startup".format((datetime.now() + timedelta(hours=5)).strftime("%c")))
 def add_score(c, x):
 	if c in blocked:
 		return
