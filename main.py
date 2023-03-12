@@ -6,6 +6,7 @@ from scapy.all import *
 import numpy as np
 import dpkt
 import logging
+import requests
 from logging.handlers import RotatingFileHandler
 
 logger = logging.getLogger("Logger")
@@ -56,6 +57,13 @@ def add_score(c, x):
 		blocked[c] = True
 	if (c[1] != 1234 and c[1] != 22):
 		foundScore = ('[{}] IP: {}:{}, score: {}'.format((datetime.now() + timedelta(hours=5)).strftime("%c"), c[0], c[1], score[c]))
+		if (c[1]==443):
+			URL = 'https://get.geojs.io/v1/dns/ptr/' + c[0]
+			response = requests.get(URL)
+			if response.status_code == 200:
+				foundScore+= "URL: " + response.text
+			else:
+				foundScore+= "URL nзгot found"
 		logger.debug(foundScore)
 
 def add(c, x):
