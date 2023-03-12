@@ -61,9 +61,9 @@ def add_score(c, x):
 			URL = 'https://get.geojs.io/v1/dns/ptr/' + c[0]
 			response = requests.get(URL)
 			if response.status_code == 200:
-				foundScore+= "URL: " + response.text
+				foundScore+= " URL: " + response.text[:-1]
 			else:
-				foundScore+= "URL nзгot found"
+				foundScore+= " URL not found"
 		logger.debug(foundScore)
 
 def add(c, x):
